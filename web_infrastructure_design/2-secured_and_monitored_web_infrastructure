@@ -1,0 +1,37 @@
+A user types [www.foobar.com](http://www.foobar.com) in the browser.
+
+First DNS translates the domain name to the IP address of the load balancer. After that the request goes to HAProxy through HTTPS.
+
+I added a load balancer because if one server has a problem the other one can still work. It also shares the traffic between servers.
+
+HAProxy uses Round Robin. It sends the first request to server 1, the second request to server 2, then continues like that.
+
+This is an Active-Active setup because both servers are working and receiving requests.
+
+Each server has:
+
+* Nginx
+* Application server
+* Application files
+* MySQL
+
+I added firewalls to protect the servers and block unwanted connections.
+
+I added an SSL certificate because HTTPS encrypts the traffic between the user and the infrastructure. This helps protect sensitive data.
+
+I added monitoring clients to collect information about the servers. They can collect CPU usage, memory usage, disk usage and service status and send it to a monitoring service.
+
+Monitoring is useful because it helps find problems quickly and keep track of the health of the servers.
+
+If I want to monitor web server QPS, I can collect data from Nginx logs or Nginx metrics and see how many requests are processed every second.
+
+The MySQL databases work in a Primary-Replica configuration. The Primary database accepts write operations and the Replica receives copies of the data from the Primary.
+
+The difference is that the Primary can handle INSERT, UPDATE and DELETE operations while the Replica is mainly used for reading and backup.
+
+Problems with this infrastructure:
+
+* SSL termination on the load balancer can be a problem because traffic between the load balancer and the servers may not be encrypted.
+* Only one MySQL server accepts writes. If the Primary fails, write operations stop working.
+* Having the same components on all servers can waste resources and make management more difficult.
+* The load balancer is still a SPOF because if it goes down users cannot reach the servers.
