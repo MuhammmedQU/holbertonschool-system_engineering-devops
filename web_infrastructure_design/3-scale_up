@@ -1,0 +1,26 @@
+A user types [www.foobar.com](http://www.foobar.com) in the browser.
+
+DNS resolves the domain name and sends the request to the load balancer cluster.
+
+I added a second HAProxy load balancer to avoid having a single point of failure. If one load balancer fails, the other one can continue serving requests.
+
+The load balancers distribute traffic to the web servers.
+
+The web servers run Nginx and are responsible for receiving HTTP requests and serving static content.
+
+I separated the application server from the web servers. The application server is responsible for running the application logic and processing requests.
+
+I also separated the database onto its own server. This improves performance, organization, and makes the infrastructure easier to scale.
+
+By splitting the components, each server has a specific responsibility:
+
+* Load Balancers: distribute traffic
+* Web Servers: handle web requests
+* Application Server: runs the application code
+* Database Server: stores application data
+
+This design is more scalable because each component can be upgraded independently when needed.
+
+The additional server was added to separate services and reduce resource competition between web, application, and database components.
+
+The second load balancer was added to improve availability and reduce the risk of downtime if one load balancer fails
