@@ -1,0 +1,47 @@
+A user wants to access the website by typing [www.foobar.com](http://www.foobar.com) in a browser.
+
+First, the DNS translates the domain name [www.foobar.com](http://www.foobar.com) to the server IP address 8.8.8.8. After getting the IP address, the user's computer sends an HTTP request to the server.
+
+The server contains Nginx, an application server, the application files, and a MySQL database.
+
+Nginx works as the web server. It receives requests from users and forwards them to the application server when needed.
+
+The application server runs the application code and processes the user's requests. If data is needed, it communicates with the MySQL database.
+
+The MySQL database stores and manages the application's data such as user information and website content.
+
+A server is a computer that provides services to other computers called clients.
+
+The role of the domain name is to provide a human-readable name instead of using an IP address.
+
+The www record is an A record that points to the server IP address 8.8.8.8.
+
+The server communicates with the user's computer using the TCP/IP protocol and HTTP requests.
+
+This infrastructure has some problems. It has a Single Point of Failure (SPOF) because everything is running on one server. If the server goes down, the website becomes unavailable.
+
+Another problem is downtime during maintenance. If the server or web server needs to be restarted when deploying new code, the website may become unavailable for some time.
+
+It also cannot scale easily because a single server may not be able to handle a large amount of incoming traffic
+
+
+
+User
+  |
+www.foobar.com
+  |
+ DNS
+  |
+8.8.8.8
+  |
++-------------------+
+|      Server       |
+|                   |
+|       Nginx       |
+|         |         |
+| Application Server|
+|         |         |
+|       MySQL       |
+|                   |
+| Application Files |
++-------------------+
